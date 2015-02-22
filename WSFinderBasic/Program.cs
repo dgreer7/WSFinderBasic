@@ -10,24 +10,37 @@ namespace WSFinderBasic
     {
         static void Main(string[] args)
         {
-            string workstation = "NEPTUNE";
+            byte maxAtOnce = 15;
+            //string workstation = "NEPTUNE";
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Expections:\n * AstroGrep.exe is installed as \"Program Files (x86)\\AstroGrep\\AstroGrep.exe\"");
-            //OnLine.LocalPing();
-            Search.AstroConfigs();
+            //Search.AstroConfigs();
 
-            /*
+            List<string> workstationList = new List<string>();
 
-            if (OnLine.IsOnLine(workstation))
+            byte numberLaunched = 0;
+            foreach (string workstation in workstationList)
             {
-                Search.Astro(workstation);
+                if (OnLine.IsOnLine(workstation))
+                {
+                    if (numberLaunched == maxAtOnce)
+                    {
+                        Console.WriteLine("So far {0} of {1} have been launched.\nPress any key to continue.", numberLaunched, workstationList.Count);
+                        numberLaunched = 0;
+                        Console.ReadKey();
+                    }
+                    Search.Astro(workstation);
+                    numberLaunched++;
+                }
+                else
+                {
+                    Console.WriteLine("Sorry {0} is not online.", workstation);
+                }
             }
-            else
-            {
-                Console.WriteLine("Sorry {0} is not online.", workstation);
-            }*/
+
+
             Console.ReadKey();
-             
+
 
         }
     }

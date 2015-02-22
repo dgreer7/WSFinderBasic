@@ -33,22 +33,15 @@ namespace WSFinderBasic
                 }
             }
         }
-        /*static public void AstroConfigs()
-        {
-            string config1 = Environment.ExpandEnvironmentVariables("%AppData%\\Notepad++\\config.xml");
-            XmlDocument configFile1 = new XmlDocument();
-            configFile1.Load(config1);
-        }*/
    
         static public void Astro(string wName)
         {
             string path = Environment.ExpandEnvironmentVariables("%ProgramFiles(x86)%\\AstroGrep\\AstroGrep.exe");
             //string astroArgs = String.Format("/stext=\"(COMPLETION CODE)|(BOB VILA)\" /stypes=\"*_IMAGE.log, *_BDA.log, *_OBM.log\" /r /e /l /cl=\"2\" /s", wName);
-            string astroArgs = String.Format("/spath=\"\\\\{0}\\C$\\\" /stypes=\"*_IMAGE.log, *_BDA.log, *_OBM.log\" /e /r /l /cl=\"2\" /s", wName);
             //string astroArgs = String.Format("/stext=\"(COMPLETION CODE)|(BOB VILA)\" /spath=\"\\\\{0}\\C$\\\"",wName);
+            string astroArgs = String.Format("/spath=\"\\\\{0}\\C$\\\" /stypes=\"*_IMAGE.log, *_BDA.log, *_OBM.log\" /e /r /l /cl=\"2\" /s", wName);
+            
             Process.Start(path, astroArgs);
         }
-        // /spath = \"\\\\{1}\\C$"
-        // , wName
     }
 }
