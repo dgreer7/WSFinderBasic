@@ -1,4 +1,5 @@
-**/bin/**
+**/bin/*.exe
+**/bin/*.pdb
 **/obj/Debug/**
 **/*dud_*
 *.suo
