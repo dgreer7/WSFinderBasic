@@ -8,6 +8,12 @@ namespace WSFinderBasic
 {
     class WorkstationList
     {
+        /// <summary>
+        /// The static list will return a List<string> of all names that have been staticly
+        /// compiled into code. This list was gathered from dud_AkPac_0.2.0.bat.
+        /// List comprises SEA, PDX, ANC, SAN, SIT, and JNU.
+        /// </summary>
+        /// <returns></returns>
         public static List<string> StaticList()
         {
             List<string> listOfKnownNames = new List<string>();
@@ -127,6 +133,11 @@ namespace WSFinderBasic
             listOfKnownNames.Add("SITTRASPODW02");
 
             return listOfKnownNames;
+        }
+        public static List<string> StationCityList(string cityCode)
+        {
+            List<string> listOfMatchingNames = new List<string>();
+            return listOfMatchingNames;
         }
     }
 
