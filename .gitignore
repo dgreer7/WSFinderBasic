@@ -1,5 +1,6 @@
-**/bin/*.exe
-**/bin/*.pdb
+**/bin/**/*.exe
+**/bin/**/*.pdb
+**/bin/**/*.vshost.*
 **/obj/Debug/**
 **/*dud_*
 *PC_Names*

@@ -1,7 +1,9 @@
-﻿using log4net;
+﻿using HtmlAgilityPack;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -147,6 +149,27 @@ namespace WSFinderBasic
         private static List<string> ReadInNameList()
         {
             List<string> listOfFoundNames = new List<string>();
+            
+            WebClient webClient = new WebClient();
+            string fsgUrl = webClient.DownloadString("http://fsg/PC_names.htm");
+
+            HtmlAgilityPack.HtmlDocument fsgList = new HtmlAgilityPack.HtmlDocument();
+            try
+            {
+                fsgList.LoadHtml(fsgUrl);
+            }
+            catch (Exception loadError)
+            {
+                log.Fatal(string.Format("Exception caught when attempting to load {0}", fsgUrl), loadError);
+                return null;
+            }
+                        
+            List<List<string>> table = fsgList.DocumentNode.SelectSingleNode("//table[@class='mydata']")
+            .Descendants("tr")
+            .Skip(1)
+            .Where(tr => tr.Elements("td").Count() > 1)
+            .Select(tr => tr.Elements("td").Select(td => td.InnerText.Trim()).ToList())
+            .ToList();
 
             return listOfFoundNames;
         }
