@@ -2,4 +2,5 @@
 **/bin/*.pdb
 **/obj/Debug/**
 **/*dud_*
+*PC_Names*
 *.suo

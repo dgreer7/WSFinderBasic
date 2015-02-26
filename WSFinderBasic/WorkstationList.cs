@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace WSFinderBasic
 {
     class WorkstationList
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+    (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         /// <summary>
         /// The static list will return a List<string> of all names that have been staticly
         /// compiled into code. This list was gathered from dud_AkPac_0.2.0.bat.
@@ -132,12 +135,20 @@ namespace WSFinderBasic
             listOfKnownNames.Add("SITTRASPODW01");
             listOfKnownNames.Add("SITTRASPODW02");
 
+            log.Debug("ListOFKnownNames has add all values and is about to return");
+
             return listOfKnownNames;
         }
         public static List<string> StationCityList(string cityCode)
         {
             List<string> listOfMatchingNames = new List<string>();
             return listOfMatchingNames;
+        }
+        private static List<string> ReadInNameList()
+        {
+            List<string> listOfFoundNames = new List<string>();
+
+            return listOfFoundNames;
         }
     }
 

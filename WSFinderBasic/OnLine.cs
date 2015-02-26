@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,6 +13,9 @@ namespace WSFinderBasic
 {
     class OnLine
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+    (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Will return boolean if passed string is online.
         /// Will return false for not online as well as not listed in DNS.
@@ -27,16 +31,19 @@ namespace WSFinderBasic
 
                 if (reply.Status == IPStatus.Success)
                 {
+                    log.Debug(string.Format("{0} is online and is located in DNS.", workstationName));
                     return true;
                 }
                 else
                 {
+                    log.Info(string.Format("{0} is not online but is located in DNS.", workstationName));
                     return false;
                 }
             }
             //catching exceptions for workstations that are no longer listed in the DNS
             catch (Exception)
             {
+                log.Warn(string.Format("{0} is not online and is not located in DNS.", workstationName));
                 return false;
             }
         }

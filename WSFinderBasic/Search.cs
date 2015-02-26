@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace WSFinderBasic
 {
     class Search
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         static public void AstroConfigs()
         {
             //Swith this to XmlReader
@@ -40,7 +42,7 @@ namespace WSFinderBasic
             //string astroArgs = String.Format("/stext=\"(COMPLETION CODE)|(BOB VILA)\" /stypes=\"*_IMAGE.log, *_BDA.log, *_OBM.log\" /r /e /l /cl=\"2\" /s", wName);
             //string astroArgs = String.Format("/stext=\"(COMPLETION CODE)|(BOB VILA)\" /spath=\"\\\\{0}\\C$\\\"",wName);
             string astroArgs = String.Format("/spath=\"\\\\{0}\\C$\\\" /stypes=\"*_IMAGE.log, *_BDA.log, *_OBM.log\" /e /r /l /cl=\"2\" /s", wName);
-            
+            log.Debug(string.Format("Astrogrep has been launched for {0}", wName));
             Process.Start(path, astroArgs);
         }
     }
