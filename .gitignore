@@ -1,7 +1,8 @@
 **/bin/**/*.exe
+**/bin/**/*.config
 **/bin/**/*.pdb
 **/bin/**/*.vshost.*
 **/obj/Debug/**
 **/*dud_*
-*PC_Names*
+**/*PC_Names*
 *.suo

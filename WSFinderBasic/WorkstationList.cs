@@ -1,7 +1,7 @@
-﻿using HtmlAgilityPack;
-using log4net;
+﻿using log4net;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -146,32 +146,50 @@ namespace WSFinderBasic
             List<string> listOfMatchingNames = new List<string>();
             return listOfMatchingNames;
         }
-        private static List<string> ReadInNameList()
+        public static Dictionary<string, List<string>> ReadInNameList()
         {
-            List<string> listOfFoundNames = new List<string>();
-            
-            WebClient webClient = new WebClient();
-            string fsgUrl = webClient.DownloadString("http://fsg/PC_names.htm");
+            Dictionary<string, List<string>> listOfNames = new Dictionary<string, List<string>>();
 
-            HtmlAgilityPack.HtmlDocument fsgList = new HtmlAgilityPack.HtmlDocument();
+            StreamReader file = null;
+            string listLocation = "PC_names.csv";
+            log.Info(string.Format("The list location has been set to {0}.", listLocation));
             try
             {
-                fsgList.LoadHtml(fsgUrl);
+                file = new StreamReader(listLocation);
             }
-            catch (Exception loadError)
+            catch (Exception readException)
             {
-                log.Fatal(string.Format("Exception caught when attempting to load {0}", fsgUrl), loadError);
+                log.Fatal(string.Format("Exception when loading {0}", listLocation), readException);
                 return null;
             }
-                        
-            List<List<string>> table = fsgList.DocumentNode.SelectSingleNode("//table[@class='mydata']")
-            .Descendants("tr")
-            .Skip(1)
-            .Where(tr => tr.Elements("td").Count() > 1)
-            .Select(tr => tr.Elements("td").Select(td => td.InnerText.Trim()).ToList())
-            .ToList();
 
-            return listOfFoundNames;
+            string line = null;
+            //Counter intialized and two lines read in to skip the header and prime the first line.
+            uint counter = 1;
+            try { line = file.ReadLine(); log.Debug(string.Format("Reading in line {0} of file {1}", counter, listLocation)); }
+            catch { log.Error(string.Format("Unable to read in a line {0} of file {1}", counter, listLocation)); }
+            counter++;
+            try { line = file.ReadLine(); log.Debug(string.Format("Reading in line {0} of file {1}", counter, listLocation)); }
+            catch { log.Error(string.Format("Unable to read in a line {0} of file {1}", counter, listLocation)); }
+
+            //While reading in a line from the name list
+            while (line != null)
+            {
+                //split the string into a List
+                List<string> valuesFromLine = line.Split(',').ToList();
+                //pull the first field off as workstation name:
+                string dictionaryName = valuesFromLine.First();
+                //remove the name off the List
+                try { valuesFromLine.RemoveAt(0); }
+                catch { log.Error(string.Format("Error removing index at line {0} of file {1}", counter, listLocation)); }
+                //Add the name as key and the remaining list as dictionary value
+                try { listOfNames.Add(dictionaryName, valuesFromLine); }
+                catch (Exception addTodictionaryException) { log.Error(string.Format("Error while adding {0} at line {1} of {2}", dictionaryName, counter, listLocation), addTodictionaryException); }
+                counter++;
+                try { line = file.ReadLine(); log.Debug(string.Format("Reading in line {0} of file {1}", counter, listLocation)); }
+                catch { log.Error(string.Format("Unable to read in a line {0} of file {1}", counter, listLocation)); }
+            }
+            return listOfNames;
         }
     }
 

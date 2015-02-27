@@ -19,7 +19,13 @@ namespace WSFinderBasic
             byte maxAtOnce = 15;
 
             Console.ForegroundColor = ConsoleColor.Yellow;
+
+            //This is test code:
+            Dictionary<string, List<string>> test = WorkstationList.ReadInNameList();
+            //: and will be removed
+
             Console.WriteLine("Expections:\n * AstroGrep.exe is installed as \"Program Files (x86)\\AstroGrep\\AstroGrep.exe\"");
+            Console.WriteLine(" * PC_names.csv is located in the working directory of this application");
             //Search.AstroConfigs();
 
             Console.ReadKey();
