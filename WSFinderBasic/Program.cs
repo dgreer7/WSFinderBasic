@@ -21,7 +21,7 @@ namespace WSFinderBasic
             Console.ForegroundColor = ConsoleColor.Yellow;
 
             //This is test code:
-            Dictionary<string, List<string>> test = WorkstationList.ReadInNameList();
+            Dictionary<string, List<string>> test = WorkstationList.StationCityList("SEA","TR");
             //: and will be removed
 
             Console.WriteLine("Expections:\n * AstroGrep.exe is installed as \"Program Files (x86)\\AstroGrep\\AstroGrep.exe\"");
@@ -31,7 +31,7 @@ namespace WSFinderBasic
             Console.ReadKey();
 
             List<string> workstationList = WorkstationList.StaticList();
-            log.Debug("Static List retured from Workstaiton.List.SaticList");
+            log.Debug("Static List retured from Workstaiton.List.SaticList.");
             byte numberLaunched = 0;
             foreach (string workstation in workstationList)
             {
@@ -40,7 +40,7 @@ namespace WSFinderBasic
                     if (numberLaunched == maxAtOnce)
                     {
                         Console.WriteLine("So far {0} of {1} have been launched.\nPress any key to continue.", numberLaunched, workstationList.Count);
-                        log.Info("Maxium number of sessions launched");
+                        log.Info("Maxium number of sessions launched.");
                         numberLaunched = 0;
                         Console.ReadKey();
                     }
