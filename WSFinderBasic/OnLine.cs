@@ -47,5 +47,10 @@ namespace WSFinderBasic
                 return false;
             }
         }
+        static public string RenameConverstionR(string workstationName)
+        {
+            if (workstationName.EndsWith("R", StringComparison.CurrentCultureIgnoreCase)) { return workstationName.Substring(0, workstationName.Length -1); }
+            else { return workstationName + "R"; }
+        }
     }
 }

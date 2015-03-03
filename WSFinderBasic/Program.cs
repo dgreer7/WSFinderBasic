@@ -21,7 +21,9 @@ namespace WSFinderBasic
             Console.ForegroundColor = ConsoleColor.Yellow;
 
             //This is test code:
-            Dictionary<string, List<string>> test = WorkstationList.StationCityList("SEA","TR");
+            string test = OnLine.RenameConverstionR("SEATRAS100K01r");
+            string test2 = OnLine.RenameConverstionR(test);
+            //Dictionary<string, List<string>> test = WorkstationList.StationCityList("SEA","TR");
             //: and will be removed
 
             Console.WriteLine("Expections:\n * AstroGrep.exe is installed as \"Program Files (x86)\\AstroGrep\\AstroGrep.exe\"");
@@ -30,10 +32,10 @@ namespace WSFinderBasic
 
             Console.ReadKey();
 
-            List<string> workstationList = WorkstationList.StaticList();
+            Dictionary<string, List<string>> workstationList = WorkstationList.StationCityList("SEA");
             log.Debug("Static List retured from Workstaiton.List.SaticList.");
             byte numberLaunched = 0;
-            foreach (string workstation in workstationList)
+            foreach (string workstation in workstationList.Keys)
             {
                 if (OnLine.IsOnLine(workstation))
                 {
