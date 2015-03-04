@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,65 @@ namespace WSFinderBasic
     class Search
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        static public void OpenAstroConfigs()
+        {
+            try
+            {
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AstroGrep");
+                log.Info(string.Format("Configuration path has been set to {0}", path));
+                string generalConfigPath = Path.Combine(path, "AstroGrep.general.config");
+                log.Debug(string.Format("General configuration path has been set to {0}", generalConfigPath));
+                try
+                {
+                    FileInfo generalConfigInfo = new FileInfo(generalConfigPath);
+                    generalConfigInfo.IsReadOnly = false;
+                    try { Process.Start(generalConfigPath); }
+                    catch (Exception launchConfigException) { log.Error(string.Format("An error has occured when attempting to open {0}.", generalConfigPath), launchConfigException); }
+                }
+                catch (Exception fileInfoException) { log.Error(string.Format("An error has occured when attempting to modify the attributes of {0}.", generalConfigPath), fileInfoException); }
+                string searchConfigPath = Path.Combine(path, "AstroGrep.search.config");
+                log.Debug(string.Format("Search configuration path has been set to {0}.", searchConfigPath));
+                try
+                {
+                    FileInfo searchConfigInfo = new FileInfo(searchConfigPath);
+                    searchConfigInfo.IsReadOnly = false;
+                    try { Process.Start(searchConfigPath); }
+                    catch (Exception launchConfigException) { log.Error(string.Format("An error has occured when attempting to open {0}.", searchConfigPath), launchConfigException); }
+                }
+                catch (Exception fileInfoException) { log.Error(string.Format("An error has occured when attempting to modify the attributes of {0}.", searchConfigPath), fileInfoException); }
+            }
+            catch (Exception readInException) { log.Error("An error has occured when attempting to locate the working path for AstroGrep.", readInException); }
+        }
+
+        static public void CloseAstroConfigs()
+        {
+            try
+            {
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AstroGrep");
+                log.Info(string.Format("Configuration path has been set to {0}.", path));
+                string generalConfigPath = Path.Combine(path, "AstroGrep.general.config");
+                log.Debug(string.Format("General configuration path has been set to {0}.", generalConfigPath));
+                try
+                {
+                    FileInfo generalConfigInfo = new FileInfo(generalConfigPath);
+                    generalConfigInfo.IsReadOnly = true;
+                    log.Info("General configuration file has been set to read only.");
+                }
+                catch (Exception fileInfoException) { log.Error(string.Format("An error has occured when attempting to modify the attributes of {0}.", generalConfigPath), fileInfoException); }
+                string searchConfigPath = Path.Combine(path, "AstroGrep.search.config");
+                log.Debug(string.Format("Search configuration path has been set to {0}", searchConfigPath));
+                try
+                {
+                    FileInfo searchConfigInfo = new FileInfo(searchConfigPath);
+                    searchConfigInfo.IsReadOnly = true;
+                    log.Info("Search configuration file has been set to read only.");
+                }
+                catch (Exception fileInfoException) { log.Error(string.Format("An error has occured when attempting to modify the attributes of {0}.", searchConfigPath), fileInfoException); }
+            }
+            catch (Exception readInException) { log.Error("An error has occured when attempting to locate the working path for AstroGrep.", readInException); }
+        }
+
         static public void AstroConfigs()
         {
             //Swith this to XmlReader
@@ -35,7 +95,7 @@ namespace WSFinderBasic
                 }
             }
         }
-   
+
         static public void Astro(string wName)
         {
             string path = Environment.ExpandEnvironmentVariables("%ProgramFiles(x86)%\\AstroGrep\\AstroGrep.exe");
