@@ -13,7 +13,9 @@ namespace WSFinderBasic
     class Search
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        /// <summary>
+        /// Removes read-only attributes and opens AstroGrep configurations for modification.
+        /// </summary>
         static public void OpenAstroConfigs()
         {
             try
@@ -43,7 +45,9 @@ namespace WSFinderBasic
             }
             catch (Exception readInException) { log.Error("An error has occured when attempting to locate the working path for AstroGrep.", readInException); }
         }
-
+        /// <summary>
+        /// Set read-only attributes on AstroGrep configurations.
+        /// </summary>
         static public void CloseAstroConfigs()
         {
             try
@@ -71,10 +75,13 @@ namespace WSFinderBasic
             }
             catch (Exception readInException) { log.Error("An error has occured when attempting to locate the working path for AstroGrep.", readInException); }
         }
-
+        /// <summary>
+        /// Unready code. Don't use.
+        /// </summary>
         static public void AstroConfigs()
         {
             //Swith this to XmlReader
+            //This not ready code. Don't use.
             string config1 = Environment.ExpandEnvironmentVariables("%AppData%\\Notepad++\\config.xml");
             XmlTextReader configFile1 = new XmlTextReader(config1);
             while (configFile1.Read())
@@ -101,7 +108,7 @@ namespace WSFinderBasic
             string path = Environment.ExpandEnvironmentVariables("%ProgramFiles(x86)%\\AstroGrep\\AstroGrep.exe");
             //string astroArgs = String.Format("/stext=\"(COMPLETION CODE)|(BOB VILA)\" /stypes=\"*_IMAGE.log, *_BDA.log, *_OBM.log\" /r /e /l /cl=\"2\" /s", wName);
             //string astroArgs = String.Format("/stext=\"(COMPLETION CODE)|(BOB VILA)\" /spath=\"\\\\{0}\\C$\\\"",wName);
-            string astroArgs = String.Format("/spath=\"\\\\{0}\\C$\\\" /stypes=\"*_IMAGE.log, *_BDA.log, *_OBM.log\" /e /r /l /cl=\"2\" /s", wName);
+            string astroArgs = String.Format("/spath=\"\\\\{0}\\C$\\Airgroup\\Log\" /stypes=\"*_IMAGE.log, *_BDA.log, *_OBM.log\" /e /r /l /cl=\"2\" /s", wName);
             log.Debug(string.Format("Astrogrep has been launched for {0}", wName));
             Process.Start(path, astroArgs);
         }

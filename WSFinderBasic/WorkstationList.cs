@@ -117,6 +117,32 @@ namespace WSFinderBasic
             log.Info("Completed workstation list read-in.");
             return listOfNames;
         }
+
+        public static Dictionary<string, List<string>> ScrubCityListForTR(Dictionary<string, List<string>> fullList, string cityCode)
+        {
+            Dictionary<string, List<string>> listOfMatchingNames = new Dictionary<string, List<string>>();
+            try
+            {
+                listOfMatchingNames = fullList.Where(d => d.Key.StartsWith(cityCode + "TR")).ToDictionary(d => d.Key, d => d.Value);
+                log.Debug(string.Format("Processed LINQ to pull out {0} entries.", cityCode));
+                return listOfMatchingNames;
+            }
+            catch (Exception LINQException) { log.Fatal(string.Format("Error during LINQ to pull out {0} entries.", cityCode), LINQException); }
+            return null;
+        }
+
+        public static Dictionary<string, List<string>> ScrubCityListForGA(Dictionary<string, List<string>> fullList, string cityCode)
+        {
+            Dictionary<string, List<string>> listOfMatchingNames = new Dictionary<string, List<string>>();
+            try
+            {
+                listOfMatchingNames = fullList.Where(d => d.Key.StartsWith(cityCode + "GA")).ToDictionary(d => d.Key, d => d.Value);
+                log.Debug(string.Format("Processed LINQ to pull out {0} entries.", cityCode));
+                return listOfMatchingNames;
+            }
+            catch (Exception LINQException) { log.Fatal(string.Format("Error during LINQ to pull out {0} entries.", cityCode), LINQException); }
+            return null;
+        }
     }
 
 }
